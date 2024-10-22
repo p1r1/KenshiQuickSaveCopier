@@ -29,18 +29,18 @@
         private void InitializeComponent() {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            trayIcon = new NotifyIcon(components);
+            notifyIcon1 = new NotifyIcon(components);
             comboBoxTriggerKey = new ComboBox();
             label1 = new Label();
             label_info = new Label();
             SuspendLayout();
             // 
-            // trayIcon
+            // notifyIcon1
             // 
-            trayIcon.Icon = (Icon)resources.GetObject("trayIcon.Icon");
-            trayIcon.Text = "notifyIcon1";
-            trayIcon.Visible = true;
-            trayIcon.MouseDoubleClick += trayIcon_MouseDoubleClick;
+            notifyIcon1.Icon = (Icon)resources.GetObject("notifyIcon1.Icon");
+            notifyIcon1.Text = "KenshiQuickSaveCopier";
+            notifyIcon1.Visible = true;
+            notifyIcon1.MouseDoubleClick += notifyIcon1_MouseDoubleClick;
             // 
             // comboBoxTriggerKey
             // 
@@ -76,17 +76,20 @@
             Controls.Add(label_info);
             Controls.Add(label1);
             Controls.Add(comboBoxTriggerKey);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             FormClosing += Form1_FormClosing;
+            Load += Form1_Load;
+            Resize += Form1_Resize;
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private NotifyIcon trayIcon;
+        private NotifyIcon notifyIcon1;
         private ComboBox comboBoxTriggerKey;
         private Label label1;
         private Label label_info;

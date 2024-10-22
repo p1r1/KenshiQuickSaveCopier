@@ -1,5 +1,6 @@
 using Gma.System.MouseKeyHook;
 using Newtonsoft.Json;
+using System.Windows.Forms;
 
 namespace KenshiSaveCopier
 {
@@ -16,17 +17,8 @@ namespace KenshiSaveCopier
 
         public Form1() {
             InitializeComponent();
-            this.ShowInTaskbar = false; // Ensure it doesn't show in the taskbar
-            this.WindowState = FormWindowState.Normal; // Start minimized
-
-            // Handle the form resize event to minimize to the tray
-            this.Resize += new EventHandler(Form1_Resize);
-
-            // Load filePath from config.json
-            if (!LoadConfig()) Application.Exit();
 
             //setups
-            SetupTray();
             SetupComboBox();
 
             // Initialize the global mouse hook
@@ -39,6 +31,7 @@ namespace KenshiSaveCopier
             if (File.Exists(filePath))
                 lastModifiedDate = File.GetLastWriteTime(filePath);
         }
+
 
         // Method to load configuration from config.json
         private bool LoadConfig() {
@@ -64,17 +57,6 @@ namespace KenshiSaveCopier
         }
 
         // setup
-        private void SetupTray() {
-            // Initialize the tray icon
-            trayIcon = new NotifyIcon() {
-                Visible = true
-            };            
-
-            // Create a ContextMenuStrip for the tray icon
-            ContextMenuStrip contextMenu = new ContextMenuStrip();
-            contextMenu.Items.Add("Exit", null, Exit);  // Add an "Exit" option
-            trayIcon.ContextMenuStrip = contextMenu;  // Assign the context menu to the tray icon
-        }
         private void SetupComboBox() {
             // Populate the ComboBox with available trigger options (keys and mouse buttons)
             comboBoxTriggerKey.Items.AddRange(new object[] {
@@ -232,43 +214,47 @@ namespace KenshiSaveCopier
             }
         }
 
-        // Method to handle system exit from the tray icon
-        private void Exit(object sender, EventArgs e) {
-            trayIcon.Visible = false;
-            Application.Exit();
-        }
-
         private void OnApplicationExit(object sender, EventArgs e) {
             if (globalMouseHook != null) {
                 globalMouseHook.MouseDownExt -= OnMouseDown;
                 globalMouseHook.Dispose();
             }
 
-            trayIcon.Dispose();
+            notifyIcon1.Dispose();
         }
 
-        private void trayIcon_MouseDoubleClick(object sender, MouseEventArgs e) {
-            // Restore the form if it is minimized or hidden
-            this.ShowInTaskbar = true; // Show the form in the taskbar again
-            this.WindowState = FormWindowState.Minimized;
-            this.Show();
-            this.WindowState = FormWindowState.Normal;
+
+        #region notifyIcon
+        private void Form1_Load(object sender, EventArgs e) {
+            notifyIcon1.Visible = false;
+
+            // not notify icon logic
+            // Load filePath from config.json
+            if (!LoadConfig()) {
+                notifyIcon1.Visible = false;
+                Application.Exit();
+            }
+        }
+
+        private void Form1_Resize(object sender, EventArgs e) {
+            if (this.WindowState == FormWindowState.Minimized) {
+                Hide();
+                notifyIcon1.Visible = true;
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
-            // Minimize the form instead of closing
-            e.Cancel = true; // Cancel the close event
-            this.Hide(); // Hide the form
-            this.ShowInTaskbar = false; // Remove it from the taskbar
+            notifyIcon1.Visible = false;
+            Application.Exit();
         }
 
-        
-        private void Form1_Resize(object sender, EventArgs e) {
-            // If the form is minimized, hide it from the taskbar and move to the system tray
-            if (this.WindowState == FormWindowState.Minimized) {
-                this.Hide(); // Hide the form
-                this.ShowInTaskbar = false; // Remove it from the taskbar
-            }
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e) {
+            Show();
+            this.WindowState = FormWindowState.Normal;
+            notifyIcon1.Visible = false;
         }
+
+        #endregion
+
     }
 }
