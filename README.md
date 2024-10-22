@@ -1,0 +1,2 @@
+# KenshiQuickSaveCopier
+KenshiQuickSaveCopier
