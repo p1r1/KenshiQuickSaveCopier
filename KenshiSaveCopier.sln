@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35323.107
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KenshiSaveCopier", "KenshiSaveCopier\KenshiSaveCopier.csproj", "{D5027098-71AE-4BFC-9711-4D2DA5C09C25}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D5027098-71AE-4BFC-9711-4D2DA5C09C25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5027098-71AE-4BFC-9711-4D2DA5C09C25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5027098-71AE-4BFC-9711-4D2DA5C09C25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5027098-71AE-4BFC-9711-4D2DA5C09C25}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E06E99F5-39B0-4E3C-8619-BCF59AB0E6DE}
+	EndGlobalSection
+EndGlobal
